@@ -106,6 +106,7 @@ function Footer() {
           <p className="text-white/40 text-center md:text-left">
             © {currentYear} Alea Nicole Tandoc. All rights reserved.
           </p>
+
         </div>
 
       </div>

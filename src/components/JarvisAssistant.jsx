@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
-import { BsStars, BsKeyboard } from "react-icons/bs"
+import { BsStars } from "react-icons/bs"
 import { FaPaperPlane } from "react-icons/fa"
 import { askGemini } from "../lib/gemini"
-
+import logo from "../assets/logo.png"
 // ═══════════════════════════════════════════════
 // 🔥 PORTFOLIO KNOWLEDGE BASE (local fallback)
 // ═══════════════════════════════════════════════
@@ -461,7 +461,7 @@ function JarvisAssistant() {
           isActive ? "h-[220px] opacity-100 translate-y-0" : "h-0 opacity-0 translate-y-10 overflow-hidden"
         }`}
       >
-        <div className="flex flex-col items-center gap-5 w-fit max-w-[90vw] px-4 pb-8 relative z-10">
+        <div className="flex flex-col items-center gap-5 w-fit max-w-[90vw] px-4 pb-12 relative z-10">
 
           {/* USER TRANSCRIPT / SUBTITLE */}
           {(transcript || currentUserText) && (
@@ -497,69 +497,44 @@ function JarvisAssistant() {
       {/* ── ORB AND CONTROLS ── */}
       <div className="relative flex flex-col items-center pointer-events-none mt-2">
 
-        {/* KEYBOARD / TEXT INPUT TOGGLE */}
-        <div
-          className={`absolute top-1/2 -translate-y-1/2 transition-all duration-500 flex items-center z-20 ${
-            isActive ? "-right-[60px] sm:-right-[180px]" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          <div
-            className={`pointer-events-auto flex items-center bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/10 rounded-full transition-all duration-500 overflow-hidden shadow-lg cursor-pointer ${
-              isInputFocused
-                ? "w-[160px] sm:w-[200px] px-3 py-2 border-white/30"
-                : "w-11 h-11 justify-center hover:bg-white/10 hover:border-white/20"
-            }`}
-            onClick={() => {
-              if (!isInputFocused) {
-                setIsInputFocused(true)
-                stopAll()
-              }
-            }}
-          >
-            {!isInputFocused ? (
-              <BsKeyboard className="text-white/70 text-lg" />
-            ) : (
-              <div className="flex items-center gap-2 w-full">
-                <input
-                  autoFocus
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  onKeyDown={e => { if (e.key === "Enter") handleSend() }}
-                  onBlur={() => { if (!input) setIsInputFocused(false) }}
-                  placeholder="Type a command..."
-                  className="bg-transparent text-white text-sm outline-none placeholder:text-white/40 w-full pointer-events-auto"
-                />
-                <button
-                  onClick={handleSend}
-                  className="text-white/60 hover:text-white transition-colors p-1 pointer-events-auto"
-                >
-                  <FaPaperPlane className="text-[12px]" />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* TEXT INPUT */}
 
-        {/* OUTER RING 1 — slow spin / pulse on active */}
-        <div
-          className={`pointer-events-none absolute inset-0 rounded-full border border-white/[0.06] scale-[1.7] ${
-            isActive && mode !== "idle"
-              ? "animate-[ringPulse_1.5s_ease-out_infinite]"
-              : "animate-[ringSpin_12s_linear_infinite]"
-          }`}
-        />
-        {/* OUTER RING 2 */}
-        <div
-          className={`pointer-events-none absolute inset-0 rounded-full border border-white/[0.04] scale-[2.2] ${
-            isActive && mode !== "idle"
-              ? "animate-[ringPulse_2s_ease-out_infinite]"
-              : "animate-[ringSpin_20s_linear_infinite_reverse]"
-          }`}
-        />
-        {/* OUTER RING 3 — only visible when active */}
-        {isActive && mode !== "idle" && (
-          <div className="pointer-events-none absolute inset-0 rounded-full border border-[#853953]/20 scale-[2.8] animate-[ringPulse_2.5s_ease-out_infinite]" />
-        )}
+{isActive && (
+  <div className="absolute bottom-[70px] left-1/2 -translate-x-1/2 z-20 animate-[fadeIn_0.3s_ease-out]">
+    <div
+      className="
+        flex items-center
+        bg-[#0a0a0c]/85
+        backdrop-blur-xl
+        border border-white/20
+        rounded-full
+        px-4 py-3
+        overflow-hidden
+        shadow-[0_0_30px_rgba(0,0,0,0.35)]
+        w-[240px]
+      "
+    >
+      <input
+        autoFocus
+        value={input}
+        onChange={e => setInput(e.target.value)}
+        onKeyDown={e => {
+          if (e.key === "Enter") handleSend()
+        }}
+        placeholder="Type a command..."
+        className="bg-transparent text-white text-sm outline-none placeholder:text-white/40 w-full"
+      />
+
+      <button
+        onClick={handleSend}
+        className="text-white/60 hover:text-white transition-colors p-1"
+      >
+        <FaPaperPlane className="text-[12px]" />
+      </button>
+    </div>
+  </div>
+)}
+
 
         {/* AMBIENT GLOW */}
         <div
@@ -604,11 +579,15 @@ function JarvisAssistant() {
                 ))}
               </div>
             ) : (
-              <BsStars
-                className={`text-white/90 text-[24px] transition-transform duration-700 ${
-                  isActive ? "scale-110 text-rose-300" : ""
-                }`}
-              />
+              <img
+  src={logo}
+  alt="AI Logo"
+  className={`
+    w-7 h-7 object-contain
+    transition-all duration-700
+    ${isActive ? "scale-110 opacity-100" : "opacity-90"}
+  `}
+/>
             )}
           </div>
 
