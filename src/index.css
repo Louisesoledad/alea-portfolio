@@ -57,3 +57,52 @@ to {
 transform: translateX(-50%);
 }
 }
+
+/* ── JARVIS ASSISTANT ANIMATIONS ── */
+
+@keyframes orbIdle {
+  0%, 100% { transform: scale(1);   box-shadow: 0 0 40px rgba(90,42,77,0.5), inset 0 0 20px rgba(133,57,83,0.1); }
+  50%       { transform: scale(1.03); box-shadow: 0 0 55px rgba(90,42,77,0.7), inset 0 0 28px rgba(133,57,83,0.2); }
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.06); opacity: 0.9; }
+}
+
+@keyframes orbSpeak {
+  0%, 100% { transform: scale(1);    }
+  33%       { transform: scale(1.04); }
+  66%       { transform: scale(0.98); }
+}
+
+@keyframes ringSpin {
+  from { transform: rotate(0deg) scale(var(--ring-scale, 1.7)); }
+  to   { transform: rotate(360deg) scale(var(--ring-scale, 1.7)); }
+}
+
+@keyframes ringPulse {
+  0%   { transform: scale(1.7); opacity: 0.6; }
+  50%  { transform: scale(2.3); opacity: 0;   }
+  100% { transform: scale(1.7); opacity: 0;   }
+}
+
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.3); }
+  50%       { transform: scaleY(1);   }
+}
+
+@keyframes panelSlideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -45,18 +45,18 @@ function ContactSection() {
       id="contact"
       className="relative bg-dark py-20 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[1.3fr_1fr] gap-16 items-center px-6">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.3fr_1fr] gap-16 items-center px-6 sm:px-8 md:px-10">
 
         {/* 🔥 LEFT - FORM */}
-        <div className="relative ml-10">
+        <div className="relative lg:ml-10">
 
-          <div className="relative inline-block">
+          <div className="relative inline-block w-full">
 
             {/* OUTER BORDER */}
             <div className="absolute -top-4 -left-4 w-full h-full border-[6px] border-primary z-0"></div>
 
             {/* INNER */}
-            <div className="relative border-[3px] border-primary p-8 z-10">
+            <div className="relative border-[3px] border-primary p-6 sm:p-8 z-10">
 
               <form
                 ref={form}
@@ -65,36 +65,36 @@ function ContactSection() {
               >
 
                 <input
-  type="text"
-  name="name"
-  placeholder="Your Name"
-  required
-  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition"
-/>
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base"
+                />
 
-<input
-  type="email"
-  name="email"
-  placeholder="Your Email"
-  required
-  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition"
-/>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base"
+                />
 
-<textarea
-  name="message"
-  rows="3"
-  placeholder="Your Message"
-  required
-  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 resize-none transition"
-/>
+                <textarea
+                  name="message"
+                  rows="3"
+                  placeholder="Your Message"
+                  required
+                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 resize-none transition text-sm sm:text-base"
+                />
 
                 <div className="flex justify-center">
                   <button
-  type="submit"
-  className="bg-primary px-8 py-3 mt-6 tracking-wider uppercase text-sm hover:scale-105 hover:shadow-lg transition duration-300"
->
-  Send Message
-</button>
+                    type="submit"
+                    className="bg-primary px-8 py-3 mt-6 tracking-wider uppercase text-sm hover:scale-105 hover:shadow-lg transition duration-300"
+                  >
+                    {loading ? "Sending..." : "Send Message"}
+                  </button>
                 </div>
 
               </form>
@@ -103,7 +103,7 @@ function ContactSection() {
           </div>
 
           {/* 🔥 LEFT DOTS */}
-          <div className="hidden md:grid grid-cols-6 gap-2 absolute left-[-140px] bottom-10">
+          <div className="hidden xl:grid grid-cols-6 gap-2 absolute left-[-140px] bottom-10">
             {[...Array(18)].map((_, i) => {
               const col = i % 6
               const opacity = 0.2 + (col / 5) * 0.8
@@ -124,7 +124,7 @@ function ContactSection() {
         <div className="text-white relative">
 
           {/* 🔥 TOP DOTS */}
-          <div className="grid grid-cols-3 grid-rows-4 gap-2 w-fit mb-6 ml-12 relative -top-32">
+          <div className="hidden md:grid grid-cols-3 grid-rows-4 gap-2 w-fit mb-6 ml-4 sm:ml-8 md:ml-12 relative md:-top-20 lg:-top-32">
             {[...Array(12)].map((_, i) => {
               const row = Math.floor(i / 3)
               const opacityLevels = [1, 0.75, 0.5, 0.2]
@@ -139,24 +139,24 @@ function ContactSection() {
             })}
           </div>
 
-          <div className="relative -mt-24">
+          <div className="relative md:-mt-10 lg:-mt-24">
 
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4 leading-tight">
               Let’s Work Together!
             </h2>
 
-            <p className="text-gray-300 mb-4 max-w-md">
+            <p className="text-gray-300 mb-4 max-w-md text-sm sm:text-base leading-relaxed">
               I’m available for freelance projects and collaborations. If you have an idea in mind, feel free to contact me.
             </p>
 
-            <p className="text-gray-400">
+            <p className="text-gray-400 text-sm sm:text-base break-all sm:break-normal">
               Email: tandocaleanicole@gmail.com
             </p>
 
           </div>
 
           {/* 🔥 BOTTOM DOTS */}
-          <div className="hidden md:grid [grid-template-columns:repeat(16,minmax(0,1fr))] gap-2 absolute right-[-330px] bottom-[-80px] w-[500px]">
+          <div className="hidden xl:grid [grid-template-columns:repeat(16,minmax(0,1fr))] gap-2 absolute right-[-330px] bottom-[-80px] w-[500px]">
             {[...Array(48)].map((_, i) => {
               const col = i % 16
               const opacity = 1 - (col / 15) * 0.8
@@ -176,17 +176,17 @@ function ContactSection() {
 
       {/* 🔥 SUCCESS POPUP */}
       {success && (
-        <div className="fixed bottom-10 right-10 bg-dark text-white px-6 py-4 rounded-lg shadow-2xl border border-primary flex items-center gap-3 animate-fadeIn">
+        <div className="fixed bottom-5 right-5 sm:bottom-10 sm:right-10 bg-dark text-white px-5 sm:px-6 py-3 sm:py-4 rounded-lg shadow-2xl border border-primary flex items-center gap-3 animate-fadeIn z-50">
 
-          <span className="text-green-400 text-xl">✔</span>
+          <span className="text-green-400 text-lg sm:text-xl">✔</span>
 
-          <p className="text-sm">
+          <p className="text-xs sm:text-sm">
             Message sent successfully!
           </p>
 
           <button
             onClick={() => setSuccess(false)}
-            className="ml-4 text-xs opacity-70 hover:opacity-100"
+            className="ml-2 sm:ml-4 text-xs opacity-70 hover:opacity-100"
           >
             ✕
           </button>
