@@ -159,6 +159,12 @@ function JarvisAssistant() {
 
   // ── DEBOUNCE REF ──
   const speechDebounceRef  = useRef(null)
+  const idleTimeoutRef = useRef(null)
+
+  // ── INACTIVITY TIMER ──
+  // Auto-deactivates after 30s of no voice/text/AI interaction.
+  const inactivityTimerRef = useRef(null)
+  const INACTIVITY_MS      = 30_000
 
   // ── PRELOAD PREFERRED VOICE ──
   // Browsers load voices async; voiceschanged fires when the list is ready.
@@ -185,8 +191,32 @@ function JarvisAssistant() {
       recognitionRef.current?.abort()
       clearTimeout(subtitleTimeoutRef.current)
       clearTimeout(speechDebounceRef.current)
+      clearTimeout(inactivityTimerRef.current)
     }
   }, [])
+
+  // ── DEACTIVATE (shared teardown) ──
+  // Called by inactivity timeout and by manual orb-press-while-busy.
+  const deactivate = useCallback(() => {
+    synthRef.current?.cancel()
+    recognitionRef.current?.stop()
+    clearTimeout(speechDebounceRef.current)
+    clearTimeout(inactivityTimerRef.current)
+    setMode("idle")
+    setTranscript("")
+    setCurrentSubtitle("")
+    setCurrentUserText("")
+    setIsInputFocused(false)
+    setIsActive(false)
+    isProcessingRef.current = false
+  }, [])
+
+  // ── RESET INACTIVITY TIMER ──
+  // Call this on every interaction: typing, speaking, transcript, AI reply.
+  const resetInactivityTimer = useCallback(() => {
+    clearTimeout(inactivityTimerRef.current)
+    inactivityTimerRef.current = setTimeout(deactivate, INACTIVITY_MS)
+  }, [deactivate])
 
   // ── SUBTITLE HELPER ──
   const setTemporarySubtitle = useCallback((text, isBot = true) => {
@@ -205,13 +235,30 @@ function JarvisAssistant() {
     // Small delay after cancel() so Chrome doesn't swallow the new utterance
     synthRef.current.cancel()
 
-    const utt = new SpeechSynthesisUtterance(text)
-    utt.rate   = prefersReducedMotion ? 1.1 : 0.95 // Slightly faster for reduced-motion users
-    utt.pitch  = 1.05
-    utt.volume = 1
+    resetInactivityTimer() // AI speaking = active interaction
 
-    // Use cached voice — avoids lag from re-scanning voice list on each call
-    if (preferredVoiceRef.current) utt.voice = preferredVoiceRef.current
+
+const utt = new SpeechSynthesisUtterance(text)
+
+const voices = synthRef.current.getVoices()
+
+const isTagalog =
+  /ng |mga |ako|ikaw|kumusta|salamat|opo|po/i.test(text)
+
+utt.rate = isTagalog ? 0.9 : (prefersReducedMotion ? 1.1 : 0.95)
+
+utt.pitch = 1.05
+utt.volume = 1
+
+if (isTagalog) {
+  utt.voice =
+    voices.find(v => /fil|tagalog/i.test(v.lang + v.name)) ||
+    voices.find(v => /english/i.test(v.lang + v.name))
+} else {
+  utt.voice =
+    preferredVoiceRef.current ||
+    voices.find(v => v.lang.startsWith("en"))
+}
 
     utt.onstart = () => {
       setMode("speaking")
@@ -220,6 +267,7 @@ function JarvisAssistant() {
     utt.onend = () => {
       setMode("idle")
       isProcessingRef.current = false
+      // Don't reset timer here — let inactivity naturally expire after speaking stops
     }
     utt.onerror = (e) => {
       // "interrupted" fires when cancel() is called — not a real error
@@ -229,7 +277,7 @@ function JarvisAssistant() {
     }
 
     synthRef.current.speak(utt)
-  }, [setTemporarySubtitle])
+  }, [setTemporarySubtitle, resetInactivityTimer])
 
   // ── STOP EVERYTHING ──
   const stopAll = useCallback(() => {
@@ -239,7 +287,18 @@ function JarvisAssistant() {
     setMode("idle")
     setTranscript("")
     isProcessingRef.current = false
+    // Note: does NOT clear inactivity timer — deactivate() does that
   }, [])
+  const resetIdleTimer = useCallback(() => {
+  clearTimeout(idleTimeoutRef.current)
+
+  idleTimeoutRef.current = setTimeout(() => {
+    stopAll()
+    setIsActive(false)
+    setCurrentSubtitle("")
+    setCurrentUserText("")
+  }, 30000)
+}, [stopAll])
 
   // ── PROCESS INPUT ──
   // Core pipeline: nav check → Gemini → local intent fallback
@@ -258,6 +317,7 @@ function JarvisAssistant() {
     setMode("processing")
     setCurrentUserText(trimmed)
     setCurrentSubtitle("")
+    resetInactivityTimer() // User submitted input = active interaction
 
     // 1. Navigation commands — instant, no API needed
     for (const cmd of navCommands) {
@@ -324,7 +384,7 @@ function JarvisAssistant() {
         ])
 
     speak(reply)
-  }, [navigate, speak])
+  }, [navigate, speak, resetInactivityTimer])
 
   // ── SPEECH RECOGNITION ──
   const startListening = useCallback(() => {
@@ -362,8 +422,10 @@ function JarvisAssistant() {
     }
 
     rec.onresult = (e) => {
+      resetIdleTimer()
       const t = Array.from(e.results).map(r => r[0].transcript).join("")
       setTranscript(t) // Show live interim transcript
+      resetInactivityTimer() // Live speech = active interaction
 
       if (e.results[e.results.length - 1].isFinal) {
         // Deduplicate: SpeechRecognition sometimes fires onresult twice for the same final result
@@ -393,12 +455,13 @@ function JarvisAssistant() {
     }
 
     rec.onend = () => {
-      // Only reset if we're still in listening mode (not already switched to processing)
+      // Only reset to idle if we're still in listening mode — don't interrupt processing
+      // Do NOT restart recognition — inactivity timer handles shutdown
       setMode(prev => prev === "listening" ? "idle" : prev)
     }
 
     rec.start()
-  }, [mode, processInput])
+  }, [mode, processInput, resetInactivityTimer])
 
   // ── TEXT SEND ──
   const handleSend = useCallback(() => {
@@ -407,27 +470,27 @@ function JarvisAssistant() {
     setInput("")
     setIsInputFocused(false)
     setIsActive(true)
+    resetInactivityTimer() // Text submit = active interaction
     processInput(txt)
-  }, [input, processInput])
+  }, [input, processInput, resetInactivityTimer])
 
   // ── ORB TOGGLE ──
   const toggleAssistant = useCallback(() => {
     if (!isActive) {
       setIsActive(true)
+      resetIdleTimer()
+      resetInactivityTimer() // Starting assistant = begin inactivity window
       startListening()
       return
     }
     if (mode === "idle") {
+      resetInactivityTimer()
       startListening()
     } else {
-      // If busy, stop everything and collapse
-      stopAll()
-      setIsActive(false)
-      setCurrentSubtitle("")
-      setCurrentUserText("")
-      setIsInputFocused(false)
+      // If busy, fully deactivate
+      deactivate()
     }
-  }, [isActive, mode, startListening, stopAll])
+  }, [isActive, mode, startListening, deactivate, resetInactivityTimer])
 
   // ── DYNAMIC STYLES ──
   const orbPulse =
@@ -443,7 +506,7 @@ function JarvisAssistant() {
     isActive ? "rgba(90,42,77,0.6)" : "rgba(90,42,77,0.3)"
 
   const statusLabels = {
-    idle:       "Tap to speak",
+  idle: isInputFocused ? "Typing..." : "Tap to speak",
     listening:  "Listening...",
     speaking:   "Speaking...",
     processing: "Thinking...",
@@ -453,7 +516,7 @@ function JarvisAssistant() {
   // 🔥 RENDER
   // ═══════════════════════════════════════════════
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center select-none w-fit max-w-fit pointer-events-none">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center select-none w-fit max-w-fit">
 
       {/* ── SUBTITLES & WAVEFORM AREA ── */}
       <div
@@ -495,7 +558,7 @@ function JarvisAssistant() {
       </div>
 
       {/* ── ORB AND CONTROLS ── */}
-      <div className="relative flex flex-col items-center pointer-events-none mt-2">
+      <div className="relative flex flex-col items-center mt-2">
 
         {/* TEXT INPUT */}
 
@@ -515,15 +578,20 @@ function JarvisAssistant() {
       "
     >
       <input
-        autoFocus
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={e => {
-          if (e.key === "Enter") handleSend()
-        }}
-        placeholder="Type a command..."
-        className="bg-transparent text-white text-sm outline-none placeholder:text-white/40 w-full"
-      />
+  autoFocus
+  value={input}
+  onChange={e => {
+    setInput(e.target.value)
+    resetIdleTimer()
+  }}
+  onFocus={() => setIsInputFocused(true)}
+  onBlur={() => setIsInputFocused(false)}
+  onKeyDown={e => {
+    if (e.key === "Enter") handleSend()
+  }}
+  placeholder="Type a command..."
+  className="bg-transparent text-white text-sm outline-none placeholder:text-white/40 w-full"
+/>
 
       <button
         onClick={handleSend}
