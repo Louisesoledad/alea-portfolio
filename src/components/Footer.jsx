@@ -75,7 +75,7 @@ function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-4">
               {[
-                { icon: <FaFacebookF />, url: "https://www.facebook.com/share/18gVGVfRZb", label: "Facebook" },
+                { icon: <FaFacebookF />, url: "https://www.facebook.com/alea.nicole07", label: "Facebook" },
                 { icon: <FaInstagram />, url: "https://www.instagram.com/aleatndc", label: "Instagram" },
                 { icon: <FaTiktok />, url: "https://www.tiktok.com/@alifnds7?_r=1&_t=ZS-95TkrhuVM9J", label: "TikTok" }
               ].map((social, index) => (
