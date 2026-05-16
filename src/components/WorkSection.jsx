@@ -306,16 +306,18 @@ function WorkSection() {
             <FiChevronRight aria-hidden="true" />
           </button>
 
-          <div className="relative z-10 grid w-full max-w-7xl gap-6 lg:grid-cols-[1fr_340px] lg:items-center">
-            <div className="relative flex min-h-[58vh] items-center justify-center border border-white/10 bg-white/[0.03] p-3 sm:p-5">
+          <div className="relative z-10 w-full max-w-7xl overflow-y-auto max-h-[95vh] rounded-2xl border border-white/10 bg-[#111111]/95 p-3 sm:p-5">
+  <div className="grid gap-5 lg:grid-cols-[1fr_340px] lg:items-center">
+            <div className="relative flex min-h-[260px] sm:min-h-[420px] lg:min-h-[58vh] items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-2 sm:p-4">
               <img
                 src={currentProject.images[currentIndex]}
                 alt={`${currentProject.title} ${currentIndex + 1}`}
-                className="max-h-[68vh] max-w-full object-contain shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
+                className="max-h-[70vh] w-full object-contain rounded-lg shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
               />
             </div>
+            
 
-            <aside className="border border-white/10 bg-[#1f1f1f]/85 p-5 sm:p-6">
+            <aside className="rounded-xl border border-white/10 bg-[#1f1f1f]/85 p-4 sm:p-6">
               <p className="text-[10px] uppercase tracking-[0.35em] text-[#d0a7b7]">
                 {currentProject.category}
               </p>
@@ -377,9 +379,10 @@ function WorkSection() {
                   <FiChevronRight aria-hidden="true" />
                 </button>
               </div>
-            </aside>
+                        </aside>
           </div>
         </div>
+      </div>
       )}
     </section>
   )
