@@ -1,14 +1,61 @@
 import emailjs from "@emailjs/browser"
 import { useRef, useState, useEffect } from "react"
+import ReCAPTCHA from "react-google-recaptcha"
 
 function ContactSection() {
   const form = useRef()
+  const recaptchaRef = useRef(null)
 
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [errors, setErrors] = useState({})
+  const [captchaValue, setCaptchaValue] = useState(null)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
+    }
+  }
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value)
+    if (errors.captcha) {
+      setErrors((prev) => ({ ...prev, captcha: "" }))
+    }
+  }
+
+  const validate = () => {
+    const newErrors = {}
+    if (!formData.name.trim()) newErrors.name = "Name is required"
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required"
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters"
+    }
+
+    if (!captchaValue) {
+      newErrors.captcha = "Please complete the ReCAPTCHA verification"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const sendEmail = (e) => {
     e.preventDefault()
+    
+    if (!validate()) return
+
     setLoading(true)
 
     emailjs
@@ -22,7 +69,10 @@ function ContactSection() {
         () => {
           setSuccess(true)
           setLoading(false)
-          form.current.reset()
+          setFormData({ name: "", email: "", message: "" })
+          setErrors({})
+          setCaptchaValue(null)
+          if (recaptchaRef.current) recaptchaRef.current.reset()
         },
         (error) => {
           alert("Failed to send message.")
@@ -55,42 +105,84 @@ function ContactSection() {
             <div className="absolute -top-4 -left-4 w-full h-full border-[6px] border-primary z-0"></div>
 
             {/* INNER */}
-            <div className="relative border-[3px] border-primary p-6 sm:p-8 z-10">
+            <div className="relative border-[3px] border-primary p-6 sm:p-8 z-10 bg-dark">
 
               <form
                 ref={form}
                 onSubmit={sendEmail}
-                className="space-y-8 text-white"
+                className="flex flex-col gap-6 text-white"
+                noValidate
               >
 
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name"
+                    className={`w-full bg-transparent border-b outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base ${errors.name ? 'border-rose-400 focus:border-rose-400' : 'border-gray-500 focus:border-primary'}`}
+                  />
+                  {errors.name && (
+                    <span className="absolute -bottom-5 left-0 text-[11px] text-rose-400 tracking-wide animate-[fadeIn_0.3s_ease-out]">
+                      {errors.name}
+                    </span>
+                  )}
+                </div>
 
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base"
-                />
+                <div className="relative mt-2">
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your Email"
+                    className={`w-full bg-transparent border-b outline-none py-3 placeholder-gray-400 transition text-sm sm:text-base ${errors.email ? 'border-rose-400 focus:border-rose-400' : 'border-gray-500 focus:border-primary'}`}
+                  />
+                  {errors.email && (
+                    <span className="absolute -bottom-5 left-0 text-[11px] text-rose-400 tracking-wide animate-[fadeIn_0.3s_ease-out]">
+                      {errors.email}
+                    </span>
+                  )}
+                </div>
 
-                <textarea
-                  name="message"
-                  rows="3"
-                  placeholder="Your Message"
-                  required
-                  className="w-full bg-transparent border-b border-gray-500 focus:border-primary outline-none py-3 placeholder-gray-400 resize-none transition text-sm sm:text-base"
-                />
+                <div className="relative mt-2">
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows="3"
+                    placeholder="Your Message"
+                    className={`w-full bg-transparent border-b outline-none py-3 placeholder-gray-400 resize-none transition text-sm sm:text-base ${errors.message ? 'border-rose-400 focus:border-rose-400' : 'border-gray-500 focus:border-primary'}`}
+                  />
+                  {errors.message && (
+                    <span className="absolute -bottom-5 left-0 text-[11px] text-rose-400 tracking-wide animate-[fadeIn_0.3s_ease-out]">
+                      {errors.message}
+                    </span>
+                  )}
+                </div>
 
-                <div className="flex justify-center">
+                <div className="relative flex flex-col items-center mt-2">
+                  <div className="transform scale-90 sm:scale-100 origin-center transition-transform duration-300">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+                      onChange={handleCaptchaChange}
+                      theme="dark"
+                    />
+                  </div>
+                  {errors.captcha && (
+                    <span className="absolute -bottom-6 text-[11px] text-rose-400 tracking-wide animate-[fadeIn_0.3s_ease-out]">
+                      {errors.captcha}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex justify-center mt-4">
                   <button
                     type="submit"
-                    className="bg-primary px-8 py-3 mt-6 tracking-wider uppercase text-sm hover:scale-105 hover:shadow-lg transition duration-300"
+                    disabled={loading}
+                    className="bg-primary px-8 py-3 tracking-wider uppercase text-sm hover:scale-105 hover:shadow-lg transition duration-300 disabled:opacity-70 disabled:hover:scale-100"
                   >
                     {loading ? "Sending..." : "Send Message"}
                   </button>
