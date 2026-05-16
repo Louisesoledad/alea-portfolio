@@ -33,13 +33,13 @@ function Hero() {
 
           <h1 className="leading-none text-center w-full flex flex-col items-center">
 
-            <span className="block font-mont font-normal text-transparent text-[clamp(4.1rem,9.6vw,7.4rem)] sm:text-[clamp(5rem,9.2vw,8rem)] lg:text-[clamp(3.45rem,4.65vw,5.15rem)] xl:text-[clamp(4rem,4.75vw,5.75rem)] tracking-[0.025em] text-center [-webkit-text-stroke:2px_white] drop-shadow-[0_7px_16px_rgba(0,0,0,0.55)]">
-              VISUAL
-            </span>
+            <span className="block font-brunson font-black text-transparent text-[clamp(4rem,11vw,6.5rem)] sm:text-[clamp(7rem,11vw,10.5rem)] lg:text-[clamp(5rem,6vw,7.2rem)] xl:text-[clamp(5.6rem,6.2vw,8rem)] tracking-[0.08em] leading-none text-center [-webkit-text-stroke:2.8px_white] drop-shadow-[0_12px_30px_rgba(0,0,0,0.9)]">
+  VISUAL
+</span>
 
-            <span className="block -mt-1 sm:-mt-3 font-mont text-white text-[clamp(5rem,14vw,10rem)] sm:text-[clamp(6.5rem,12.8vw,11rem)] lg:text-[clamp(4.35rem,5.8vw,6.25rem)] xl:text-[clamp(4.8rem,5.65vw,6.95rem)] font-black text-center tracking-[-0.02em] drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]">
-              DESIGNER
-            </span>
+            <span className="block -mt-1 sm:-mt-3 font-brunson text-white text-[clamp(3.5rem,12vw,5.8rem)] sm:text-[clamp(7rem,12vw,10.5rem)] lg:text-[clamp(5rem,6vw,7.2rem)] xl:text-[clamp(5.6rem,6.2vw,8rem)] font-medium leading-none text-center tracking-[0.08em] drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]">
+  DESIGNER
+</span>
 
           </h1>
 
@@ -57,8 +57,8 @@ function Hero() {
           <div className="hidden lg:block absolute -left-[160px] top-[-30px] w-44 h-44 border-[5px] border-[#853953] -z-10"></div>
 
           {/* SMALL TEXT */}
-          <p className="text-sm sm:text-base font-semibold uppercase tracking-[0.32em] text-[#d0a7b7] mb-6">
-            Hi, I'm <span className="font-bold text-[#d0a7b7]">Alea</span>
+          <p className="text-sm sm:text-base uppercase tracking-[0.32em] text-[#d0a7b7] mb-6">
+            Hi, I'm Alea
           </p>
 
           {/* TITLE */}
@@ -68,7 +68,7 @@ function Hero() {
 
           {/* PARAGRAPH */}
           <p className="text-gray-400 mb-8 text-[14px] sm:text-[15px] leading-[1.7] font-mont">
-            I design <span className="font-semibold text-gray-200">clean, impactful visuals</span> that help brands stand out and connect with their audience.
+            I design clean, impactful visuals that help brands stand out and connect with their audience.
           </p>
 
           {/* BUTTON */}

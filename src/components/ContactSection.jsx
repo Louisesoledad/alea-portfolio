@@ -145,11 +145,11 @@ function ContactSection() {
             </h2>
 
             <p className="text-gray-300 mb-4 max-w-md text-sm sm:text-base leading-relaxed">
-              I'm available for <span className="font-semibold text-gray-100">freelance projects</span> and <span className="font-semibold text-gray-100">collaborations</span>. If you have an idea in mind, feel free to contact me.
+              I'm available for freelance projects and collaborations. If you have an idea in mind, feel free to contact me.
             </p>
 
             <p className="text-gray-400 text-sm sm:text-base break-all sm:break-normal">
-              <span className="font-semibold text-gray-200">Email:</span> tandocaleanicole@gmail.com
+              Email: tandocaleanicole@gmail.com
             </p>
 
           </div>

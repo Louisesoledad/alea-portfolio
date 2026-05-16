@@ -67,15 +67,15 @@ function SkillsSection() {
             Technical Expertise
           </p>
 
-          <h2 className="font-brunson text-[44px] sm:text-[58px] md:text-[72px] lg:text-[86px] leading-none tracking-tight">
-            Creative
-            <span className="block text-transparent [-webkit-text-stroke:1.5px_white]">
-              Skillset
-            </span>
-          </h2>
+          <h2 className="font-brunson text-[44px] sm:text-[58px] md:text-[72px] lg:text-[86px] leading-none tracking-[0.08em]">
+  Creative
+  <span className="block text-transparent [-webkit-text-stroke:1.5px_white]">
+    Skillset
+  </span>
+</h2>
 
           <p className="text-gray-300 max-w-xl mt-6 text-sm sm:text-base leading-relaxed">
-            A focused mix of <span className="font-semibold text-gray-100">design tools</span> and <span className="font-semibold text-gray-100">visual systems</span> for building clean, memorable brand experiences.
+            A focused mix of design tools and visual systems for building clean, memorable brand experiences.
           </p>
 
         </div>

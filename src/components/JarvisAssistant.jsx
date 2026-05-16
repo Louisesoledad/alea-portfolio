@@ -627,9 +627,45 @@ if (isTagalog) {
           }`}
           style={{ boxShadow: `0 0 40px ${glowColor}, inset 0 0 20px rgba(133,57,83,0.1)` }}
         >
-          {/* INNER GRADIENT */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#6b2d4f]/40 via-transparent to-transparent" />
+          {/* ── LIQUID ENERGY CORE ── */}
+          <div className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
+            {/* Deep volumetric base */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(60,20,80,0.4)_0%,_transparent_100%)]" />
 
+            {/* Swirling Liquid 1: Purple */}
+            <div className={`absolute top-[-30%] left-[-30%] w-[160%] h-[160%] ${isActive ? 'animate-[spin_3s_linear_infinite]' : 'animate-[spin_6s_linear_infinite]'}`}>
+              <div 
+                className="absolute top-[10%] left-[20%] w-[60%] h-[60%] bg-[#9333ea] blur-[6px] opacity-70 mix-blend-screen animate-[pulse_3s_ease-in-out_infinite]"
+                style={{ borderRadius: "40% 60% 70% 30% / 40% 50% 60% 50%" }}
+              />
+            </div>
+
+            {/* Swirling Liquid 2: Magenta/Pink */}
+            <div className={`absolute top-[-30%] left-[-30%] w-[160%] h-[160%] ${isActive ? 'animate-[spin_4s_linear_infinite_reverse]' : 'animate-[spin_8s_linear_infinite_reverse]'}`}>
+              <div 
+                className="absolute bottom-[20%] right-[20%] w-[50%] h-[50%] bg-[#ec4899] blur-[5px] opacity-60 mix-blend-screen animate-[pulse_4s_ease-in-out_infinite]"
+                style={{ borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }}
+              />
+            </div>
+
+            {/* Holographic Core Light */}
+            <div className="absolute inset-0 flex items-center justify-center animate-[pulse_2s_ease-in-out_infinite]">
+              <div className="w-[60%] h-[60%] bg-[radial-gradient(circle_at_50%_50%,_rgba(255,255,255,0.15)_0%,_transparent_70%)] blur-[3px]" />
+            </div>
+
+            {/* Floating Energy Particles */}
+            <div className="absolute inset-0 animate-[spin_10s_linear_infinite]">
+              <div className="absolute top-[20%] left-[30%] w-1 h-1 bg-white/70 rounded-full blur-[0.5px] shadow-[0_0_4px_rgba(255,255,255,0.8)] animate-pulse" />
+              <div className="absolute bottom-[25%] right-[25%] w-1.5 h-1.5 bg-fuchsia-300/60 rounded-full blur-[1px] animate-pulse delay-700" />
+              <div className="absolute top-[40%] right-[15%] w-1 h-1 bg-purple-300/80 rounded-full blur-[0.5px] animate-[ping_3s_ease-in-out_infinite]" />
+            </div>
+
+            {/* Glassmorphism Highlight / Specular Reflection */}
+            <div 
+              className="absolute top-[5%] left-[10%] w-[60%] h-[30%] bg-gradient-to-b from-white/20 to-transparent blur-[0.5px] rotate-[-20deg]" 
+              style={{ borderRadius: "50% 50% 50% 50% / 80% 80% 20% 20%" }} 
+            />
+          </div>
           {/* ICON */}
           <div className="relative z-10 flex items-center justify-center">
             {isActive && mode !== "idle" ? (

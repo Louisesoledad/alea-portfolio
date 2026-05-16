@@ -16,16 +16,17 @@ function AboutSection() {
           {/* DECORATIVE SQUARE */}
           <div className="hidden lg:block absolute -top-36 left-[480px] w-28 h-28 border-[5px] border-[#853953] -z-10"></div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-brunson mb-6 leading-tight">
-            Creative Mind Behind the Designs
-          </h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-brunson tracking-[0.06em] mb-6 leading-tight">
+  Creative <span className="text-transparent [-webkit-text-stroke:2px_white]">Mind</span> Behind the{" "}
+  <span className="text-transparent [-webkit-text-stroke:2px_white]">Designs</span>
+</h2>
 
           <p className="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
-            I’m <span className="font-bold text-white">Alea</span>, a passionate <span className="font-semibold text-gray-100">visual designer</span> focused on creating bold and modern designs that communicate clearly and effectively.
+            I’m Alea, a passionate visual designer focused on creating bold and modern designs that communicate clearly and effectively.
           </p>
 
           <p className="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
-            I enjoy turning ideas into visually engaging experiences whether it’s <span className="font-semibold text-gray-100">branding</span>, <span className="font-semibold text-gray-100">social media graphics</span>, or digital content. My goal is to help brands stand out through clean, creative, and purposeful design.
+            I enjoy turning ideas into visually engaging experiences whether it’s branding, social media graphics, or digital content. My goal is to help brands stand out through clean, creative, and purposeful design.
           </p>
 
         </div>

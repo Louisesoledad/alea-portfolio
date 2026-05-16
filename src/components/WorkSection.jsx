@@ -168,19 +168,19 @@ function WorkSection() {
               Selected Projects
             </p>
 
-            <h2 className="font-brunson text-[44px] sm:text-[58px] md:text-[76px] lg:text-[90px] leading-none tracking-tight">
-              Design
-              <span className="block text-transparent [-webkit-text-stroke:1.5px_white]">
-                Showcase
-              </span>
-            </h2>
+            <h2 className="font-brunson text-[44px] sm:text-[58px] md:text-[76px] lg:text-[90px] leading-none tracking-[0.08em]">
+  Design
+  <span className="block text-transparent [-webkit-text-stroke:1.5px_white]">
+    Showcase
+  </span>
+</h2>
           </div>
 
           <div className="relative max-w-xl lg:justify-self-end">
             <div className="hidden lg:block absolute -top-10 -left-10 w-28 h-28 border-[5px] border-[#853953] -z-10"></div>
 
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              A curated view of visual design work across <span className="font-semibold text-gray-100">brand identity</span>, <span className="font-semibold text-gray-100">social media</span>, web mockups, and print layouts.
+              A curated view of visual design work across brand identity, social media, web mockups, and print layouts.
             </p>
 
             <div className="mt-7 grid grid-cols-3 border-y border-white/10 divide-x divide-white/10">
