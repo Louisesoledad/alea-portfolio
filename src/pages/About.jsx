@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar"
 import AboutSection from "../components/AboutSection"
+import SkillsSection from "../components/SkillsSection"
 
 function About() {
   return (
@@ -11,6 +12,7 @@ function About() {
       {/* ABOUT CONTENT */}
       <main className="pt-24">
         <AboutSection />
+        <SkillsSection />
       </main>
 
     </div>

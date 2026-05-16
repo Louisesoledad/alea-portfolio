@@ -21,11 +21,11 @@ function AboutSection() {
           </h2>
 
           <p className="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
-            I’m Alea, a passionate visual designer focused on creating bold and modern designs that communicate clearly and effectively.
+            I’m <span className="font-bold text-white">Alea</span>, a passionate <span className="font-semibold text-gray-100">visual designer</span> focused on creating bold and modern designs that communicate clearly and effectively.
           </p>
 
           <p className="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
-            I enjoy turning ideas into visually engaging experiences whether it’s branding, social media graphics, or digital content. My goal is to help brands stand out through clean, creative, and purposeful design.
+            I enjoy turning ideas into visually engaging experiences whether it’s <span className="font-semibold text-gray-100">branding</span>, <span className="font-semibold text-gray-100">social media graphics</span>, or digital content. My goal is to help brands stand out through clean, creative, and purposeful design.
           </p>
 
         </div>

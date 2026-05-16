@@ -25,14 +25,13 @@ function ContactSection() {
           form.current.reset()
         },
         (error) => {
-          alert("Failed to send ❌")
-          console.log(error)
+          alert("Failed to send message.")
+          console.error(error)
           setLoading(false)
         }
       )
   }
 
-  // 🔥 AUTO HIDE SUCCESS
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(false), 3000)
@@ -47,7 +46,7 @@ function ContactSection() {
     >
       <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.3fr_1fr] gap-16 items-center px-6 sm:px-8 md:px-10">
 
-        {/* 🔥 LEFT - FORM */}
+        {/* LEFT - FORM */}
         <div className="relative lg:ml-10">
 
           <div className="relative inline-block w-full">
@@ -102,7 +101,7 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* 🔥 LEFT DOTS */}
+          {/* LEFT DOTS */}
           <div className="hidden xl:grid grid-cols-6 gap-2 absolute left-[-140px] bottom-10">
             {[...Array(18)].map((_, i) => {
               const col = i % 6
@@ -120,10 +119,10 @@ function ContactSection() {
 
         </div>
 
-        {/* 🔥 RIGHT - TEXT */}
+        {/* RIGHT - TEXT */}
         <div className="text-white relative">
 
-          {/* 🔥 TOP DOTS */}
+          {/* TOP DOTS */}
           <div className="hidden md:grid grid-cols-3 grid-rows-4 gap-2 w-fit mb-6 ml-4 sm:ml-8 md:ml-12 relative md:-top-20 lg:-top-32">
             {[...Array(12)].map((_, i) => {
               const row = Math.floor(i / 3)
@@ -141,21 +140,21 @@ function ContactSection() {
 
           <div className="relative md:-mt-10 lg:-mt-24">
 
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4 leading-tight">
-              Let’s Work Together!
+            <h2 className="text-3xl md:text-5xl font-brunson mb-4 leading-tight">
+              Let's Work Together!
             </h2>
 
             <p className="text-gray-300 mb-4 max-w-md text-sm sm:text-base leading-relaxed">
-              I’m available for freelance projects and collaborations. If you have an idea in mind, feel free to contact me.
+              I'm available for <span className="font-semibold text-gray-100">freelance projects</span> and <span className="font-semibold text-gray-100">collaborations</span>. If you have an idea in mind, feel free to contact me.
             </p>
 
             <p className="text-gray-400 text-sm sm:text-base break-all sm:break-normal">
-              Email: tandocaleanicole@gmail.com
+              <span className="font-semibold text-gray-200">Email:</span> tandocaleanicole@gmail.com
             </p>
 
           </div>
 
-          {/* 🔥 BOTTOM DOTS */}
+          {/* BOTTOM DOTS */}
           <div className="hidden xl:grid [grid-template-columns:repeat(16,minmax(0,1fr))] gap-2 absolute right-[-330px] bottom-[-80px] w-[500px]">
             {[...Array(48)].map((_, i) => {
               const col = i % 16
@@ -174,11 +173,10 @@ function ContactSection() {
         </div>
       </div>
 
-      {/* 🔥 SUCCESS POPUP */}
       {success && (
         <div className="fixed bottom-5 right-5 sm:bottom-10 sm:right-10 bg-dark text-white px-5 sm:px-6 py-3 sm:py-4 rounded-lg shadow-2xl border border-primary flex items-center gap-3 animate-fadeIn z-50">
 
-          <span className="text-green-400 text-lg sm:text-xl">✔</span>
+          <span className="text-green-400 text-lg sm:text-xl">OK</span>
 
           <p className="text-xs sm:text-sm">
             Message sent successfully!
@@ -188,7 +186,7 @@ function ContactSection() {
             onClick={() => setSuccess(false)}
             className="ml-2 sm:ml-4 text-xs opacity-70 hover:opacity-100"
           >
-            ✕
+            Close
           </button>
 
         </div>

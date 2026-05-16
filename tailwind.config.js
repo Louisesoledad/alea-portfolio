@@ -7,8 +7,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-    brunson: ['Brunson', 'sans-serif'],
-  },
+        brunson: ["Brunson", "sans-serif"],
+        mont: ["Montserrat", "sans-serif"],
+        sans: ["Montserrat", "sans-serif"],
+      },
       colors: {
         primary: "#5a2a4d",
         dark: "#1f1f1f",

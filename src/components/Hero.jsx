@@ -26,16 +26,18 @@ function Hero() {
           className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[80%] sm:h-[85%] md:h-[90%] lg:h-[95%] scale-110 lg:scale-125 object-contain grayscale"
         />
 
+        <div className="absolute inset-x-0 bottom-0 z-[1] h-[54%] bg-gradient-to-t from-black/80 via-black/38 to-transparent"></div>
+
         {/* TEXT */}
-        <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 lg:bottom-28 left-0 w-full flex justify-center px-4">
+        <div className="absolute bottom-[9%] sm:bottom-[8%] md:bottom-[7%] lg:bottom-[10%] left-0 z-10 w-full flex justify-center px-3 sm:px-5">
 
-          <h1 className="leading-none z-10 text-center w-full flex flex-col items-center">
+          <h1 className="leading-none text-center w-full flex flex-col items-center">
 
-            <span className="block text-[52px] sm:text-[72px] md:text-[90px] lg:text-[110px] font-brunson tracking-[-2px] lg:tracking-[-3px] stroke-text text-center">
+            <span className="block font-mont font-normal text-transparent text-[clamp(4.1rem,9.6vw,7.4rem)] sm:text-[clamp(5rem,9.2vw,8rem)] lg:text-[clamp(3.45rem,4.65vw,5.15rem)] xl:text-[clamp(4rem,4.75vw,5.75rem)] tracking-[0.025em] text-center [-webkit-text-stroke:2px_white] drop-shadow-[0_7px_16px_rgba(0,0,0,0.55)]">
               VISUAL
             </span>
 
-            <span className="block text-[58px] sm:text-[80px] md:text-[100px] lg:text-[123px] font-brunson text-white font-black text-center tracking-[-2px] lg:-ml-[10px]">
+            <span className="block -mt-1 sm:-mt-3 font-mont text-white text-[clamp(5rem,14vw,10rem)] sm:text-[clamp(6.5rem,12.8vw,11rem)] lg:text-[clamp(4.35rem,5.8vw,6.25rem)] xl:text-[clamp(4.8rem,5.65vw,6.95rem)] font-black text-center tracking-[-0.02em] drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]">
               DESIGNER
             </span>
 
@@ -55,24 +57,24 @@ function Hero() {
           <div className="hidden lg:block absolute -left-[160px] top-[-30px] w-44 h-44 border-[5px] border-[#853953] -z-10"></div>
 
           {/* SMALL TEXT */}
-          <p className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-brunson leading-[1.2] mb-6 tracking-tight">
-            Hi, I'm Alea
+          <p className="text-sm sm:text-base font-semibold uppercase tracking-[0.32em] text-[#d0a7b7] mb-6">
+            Hi, I'm <span className="font-bold text-[#d0a7b7]">Alea</span>
           </p>
 
           {/* TITLE */}
-          <h2 className="text-[36px] sm:text-[42px] md:text-[46px] lg:text-[48px] font-brunson leading-[1.2] mb-6 tracking-tight">
-            Designing Visuals That Stand Out
+          <h2 className="text-[30px] sm:text-[36px] md:text-[40px] lg:text-[44px] font-semibold leading-[1.2] mb-6 tracking-tight">
+            Designing <span className="font-bold text-white">Visuals</span> That <span className="font-bold text-white">Stand Out</span>
           </h2>
 
           {/* PARAGRAPH */}
           <p className="text-gray-400 mb-8 text-[14px] sm:text-[15px] leading-[1.7] font-mont">
-            I design clean, impactful visuals that help brands stand out and connect with their audience.
+            I design <span className="font-semibold text-gray-200">clean, impactful visuals</span> that help brands stand out and connect with their audience.
           </p>
 
           {/* BUTTON */}
           <Link
             to="/works"
-            className="bg-primary px-8 py-3 text-sm font-semibold font-mont hover:opacity-80 transition rounded-sm inline-block"
+            className="bg-primary px-8 py-3 text-sm font-bold font-mont hover:opacity-80 transition rounded-sm inline-block"
           >
             See my Works
           </Link>
@@ -119,10 +121,10 @@ function Hero() {
       </div>
 
       {/* SKILLS BAR */}
-      <div className="absolute bottom-0 left-0 w-full bg-primary py-3 sm:py-4 overflow-hidden">
+      <div className="absolute bottom-0 left-0 z-20 w-full bg-primary py-3 sm:py-4 overflow-hidden">
 
         <div className="marquee">
-          <div className="track text-white text-sm sm:text-base font-mont tracking-wide">
+          <div className="track text-white/95 text-sm sm:text-base font-semibold font-mont tracking-wide">
 
             {[...Array(10)].map((_, i) => (
               skills.map((skill, index) => (
