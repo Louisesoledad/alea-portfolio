@@ -578,7 +578,6 @@ if (isTagalog) {
       "
     >
       <input
-  autoFocus
   value={input}
   onChange={e => {
     setInput(e.target.value)
