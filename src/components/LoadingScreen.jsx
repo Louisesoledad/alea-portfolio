@@ -9,6 +9,14 @@ function LoadingScreen({ isLeaving }) {
       aria-label="Loading portfolio"
     >
       <div className="loading-screen__gradient" aria-hidden="true" />
+      <div className="loading-screen__scatter" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="loading-screen__shade" aria-hidden="true" />
 
       <div className="loading-screen__logo" aria-hidden="true">
