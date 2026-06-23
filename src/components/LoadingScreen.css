@@ -1,0 +1,225 @@
+@property --loader-fill {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+body.is-loading-screen {
+  overflow: hidden;
+}
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 20%),
+    #262626;
+  opacity: 1;
+  isolation: isolate;
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+
+.loading-screen--leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-screen__gradient {
+  position: absolute;
+  inset: -36%;
+  z-index: -3;
+  background:
+    radial-gradient(circle, rgba(214, 35, 109, 0.74) 0%, rgba(158, 37, 98, 0.4) 32%, transparent 70%) 12% 76% / 48% 58% no-repeat,
+    radial-gradient(circle, rgba(198, 26, 118, 0.68) 0%, rgba(148, 36, 95, 0.38) 31%, transparent 70%) 74% 82% / 46% 56% no-repeat,
+    radial-gradient(circle, rgba(223, 38, 116, 0.78) 0%, rgba(153, 41, 102, 0.38) 34%, transparent 72%) 86% 12% / 52% 58% no-repeat,
+    radial-gradient(circle, rgba(185, 45, 123, 0.6) 0%, rgba(105, 42, 84, 0.34) 32%, transparent 70%) 30% 4% / 46% 52% no-repeat,
+    linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(45, 38, 45, 0.92)) center / cover no-repeat;
+  filter: blur(2px);
+  transform-origin: 50% 50%;
+  animation:
+    loadingGradientFlow 8s ease-in-out infinite,
+    loadingGradientBreathe 4.8s ease-in-out infinite alternate;
+}
+
+.loading-screen__gradient::before {
+  position: absolute;
+  inset: 9%;
+  content: "";
+  background:
+    radial-gradient(circle, rgba(230, 42, 122, 0.4), transparent 66%) 22% 70% / 42% 48% no-repeat,
+    radial-gradient(circle, rgba(255, 52, 132, 0.32), transparent 68%) 72% 24% / 44% 50% no-repeat,
+    radial-gradient(circle, rgba(161, 30, 104, 0.38), transparent 68%) 58% 84% / 42% 48% no-repeat;
+  mix-blend-mode: screen;
+  transform-origin: 50% 50%;
+  animation: loadingGradientColorDrift 10s ease-in-out infinite;
+}
+
+.loading-screen__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(24, 24, 24, 0.08), rgba(31, 31, 31, 0.3) 32%, rgba(29, 29, 29, 0.58) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.22));
+}
+
+.loading-screen__logo {
+  position: relative;
+  width: clamp(52px, 6.5vw, 72px);
+  aspect-ratio: 1;
+  transform: translateZ(0);
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.24))
+    drop-shadow(0 0 24px rgba(214, 35, 109, 0.24));
+}
+
+.loading-screen__logo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.loading-screen__logo-base {
+  opacity: 0.22;
+}
+
+.loading-screen__logo-fill {
+  --loader-fill: 0%;
+  opacity: 0.98;
+  -webkit-mask-image: conic-gradient(from -90deg at 50% 50%, #000 0 var(--loader-fill), transparent var(--loader-fill) 100%);
+  mask-image: conic-gradient(from -90deg at 50% 50%, #000 0 var(--loader-fill), transparent var(--loader-fill) 100%);
+  animation:
+    loadingLogoFill 2.35s cubic-bezier(0.44, 0.02, 0.18, 1) forwards,
+    loadingLogoGlow 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes loadingLogoFill {
+  from {
+    --loader-fill: 0%;
+  }
+
+  to {
+    --loader-fill: 100%;
+  }
+}
+
+@keyframes loadingLogoGlow {
+  from {
+    filter: brightness(0.86);
+  }
+
+  to {
+    filter: brightness(1.18);
+  }
+}
+
+@keyframes loadingGradientFlow {
+  0% {
+    background-position:
+      12% 76%,
+      74% 82%,
+      86% 12%,
+      30% 4%,
+      center;
+  }
+
+  25% {
+    background-position:
+      24% 66%,
+      64% 74%,
+      78% 20%,
+      38% 12%,
+      center;
+  }
+
+  50% {
+    background-position:
+      34% 82%,
+      56% 66%,
+      68% 8%,
+      48% 18%,
+      center;
+  }
+
+  75% {
+    background-position:
+      18% 90%,
+      78% 70%,
+      90% 28%,
+      24% 22%,
+      center;
+  }
+
+  100% {
+    background-position:
+      12% 76%,
+      74% 82%,
+      86% 12%,
+      30% 4%,
+      center;
+  }
+}
+
+@keyframes loadingGradientColorDrift {
+  0% {
+    background-position:
+      22% 70%,
+      72% 24%,
+      58% 84%;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+
+  33% {
+    background-position:
+      34% 58%,
+      62% 34%,
+      48% 74%;
+    filter: hue-rotate(10deg) saturate(1.15);
+  }
+
+  66% {
+    background-position:
+      18% 82%,
+      80% 18%,
+      68% 70%;
+    filter: hue-rotate(-8deg) saturate(1.08);
+  }
+
+  100% {
+    background-position:
+      22% 70%,
+      72% 24%,
+      58% 84%;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+}
+
+@keyframes loadingGradientBreathe {
+  from {
+    opacity: 0.82;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen__gradient,
+  .loading-screen__gradient::before,
+  .loading-screen__logo-fill {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}
