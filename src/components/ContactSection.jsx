@@ -1,6 +1,7 @@
 import emailjs from "@emailjs/browser"
 import { useRef, useState, useEffect } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
+import { FiArrowUpRight } from "react-icons/fi"
 
 function ContactSection() {
   const form = useRef()
@@ -243,6 +244,17 @@ function ContactSection() {
             <p className="text-gray-400 text-sm sm:text-base break-all sm:break-normal">
               Email: tandocaleanicole@gmail.com
             </p>
+            <div className="mt-6">
+  <a
+    href="/resume.pdf"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-3 border-2 border-primary bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:-translate-y-1 hover:bg-transparent hover:text-primary"
+  >
+    View Resume
+    <FiArrowUpRight className="text-base" />
+  </a>
+</div>
 
           </div>
 

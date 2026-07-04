@@ -2,7 +2,6 @@ const skills = [
   "Adobe Photoshop",
   "Adobe Illustrator",
   "Canva",
-  "Adobe InDesign",
   "Branding",
   "Typography",
   "Social Media Design",

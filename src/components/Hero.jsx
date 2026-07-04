@@ -7,7 +7,6 @@ function Hero() {
     "Adobe Photoshop",
     "Adobe Illustrator",
     "Canva",
-    "InDesign",
   ]
 
   return (
